@@ -15,6 +15,7 @@ public class CardManager : MonoBehaviour {
 	void Start () {
         cards = new List<Transform>();
         CreateCard(preparedCard);
+
 	}
 	
 	void Update () {
@@ -32,7 +33,7 @@ public class CardManager : MonoBehaviour {
     public void CreationMode()
     {
         mousePos = Input.mousePosition;
-        mousePos.z = 8.0f;
+        mousePos.z = 5.0f;
         Vector3 objectPos = Camera.main.ScreenToWorldPoint(mousePos);
         cards[0].position = new Vector3(objectPos.x, objectPos.y, objectPos.z);
 
@@ -52,23 +53,41 @@ public class CardManager : MonoBehaviour {
     public void CreateCard(GameObject obj)
     {
         float angle = 0;
-        if (obj.name == "Card") {
-            angle = cards[0].eulerAngles.z;
+        if (obj.tag == "Card") {
+            angle = cards[0].eulerAngles.x;
         }
         Vector3 objectPos = Camera.main.ScreenToWorldPoint(mousePos);
-        var clone = Instantiate(obj, objectPos, Quaternion.Euler(0, 0, angle), cardsParent.transform);
+        var clone = Instantiate(obj, objectPos, Quaternion.Euler(angle, 90, 90), cardsParent.transform);
         cards.Add((Transform)clone.transform);
     }
 
     public void RotateCard()
     {
+        //To avoid rotation reset glitch
+        cards[0].eulerAngles = new Vector3(cards[0].eulerAngles.x, 90, -90);
+
         if(Input.GetKey(KeyCode.A))
         {
-            cards[0].eulerAngles += new Vector3(0, 0, 2f);
+            cards[0].eulerAngles += new Vector3(2.0f, 0, 0);
         } else if(Input.GetKey(KeyCode.D))
         {
-            cards[0].eulerAngles += new Vector3(0, 0, -2f);
+            cards[0].eulerAngles += new Vector3(-2.0f, 0, 0);
         }
+    }
+
+    public void SelectCard()
+    {
+
+    }
+
+    public void MoveCard()
+    {
+
+    }
+
+    public void DeleteCard(GameObject card)
+    {
+        Destroy(card);
     }
 
 }

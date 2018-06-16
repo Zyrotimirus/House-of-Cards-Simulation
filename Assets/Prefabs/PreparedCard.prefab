@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23516646461706774}
   m_Layer: 0
   m_Name: PreparedCard
-  m_TagString: Untagged
+  m_TagString: GhostCard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34,9 +34,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1729352565312826}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 8}
-  m_LocalScale: {x: 0.05, y: 2, z: 1}
+  m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -54,6 +54,8 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
+  - {fileID: 2100000, guid: f9ebe44149175674b96b0a534a392d71, type: 2}
+  - {fileID: 2100000, guid: 11b20c979ad3bd649a8072780a75b3d5, type: 2}
   - {fileID: 2100000, guid: 11b20c979ad3bd649a8072780a75b3d5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -79,4 +81,4 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1729352565312826}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: 76912dec3e1c76045913652c3527e056, type: 3}
