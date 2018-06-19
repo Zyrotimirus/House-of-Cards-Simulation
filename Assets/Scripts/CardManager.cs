@@ -14,7 +14,7 @@ public class CardManager : MonoBehaviour {
 
 	void Start () {
         cards = new List<Transform>();
-        CreateCard(preparedCard);
+        CreateCard(preparedCard, new Vector3(0,0,0));
 
 	}
 	
@@ -41,7 +41,7 @@ public class CardManager : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            CreateCard(card);
+            CreateCard(card, objectPos);
         }
     }
 
@@ -50,28 +50,25 @@ public class CardManager : MonoBehaviour {
         
     }
 
-    public void CreateCard(GameObject obj)
+    public void CreateCard(GameObject obj, Vector3 objectPosition)
     {
         float angle = 0;
         if (obj.tag == "Card") {
             angle = cards[0].eulerAngles.x;
         }
-        Vector3 objectPos = Camera.main.ScreenToWorldPoint(mousePos);
-        var clone = Instantiate(obj, objectPos, Quaternion.Euler(angle, 90, 90), cardsParent.transform);
+        var clone = Instantiate(obj, objectPosition, Quaternion.Euler(angle, 90, 90), cardsParent.transform);
         cards.Add((Transform)clone.transform);
     }
 
     public void RotateCard()
     {
-        //To avoid rotation reset glitch
-        cards[0].eulerAngles = new Vector3(cards[0].eulerAngles.x, 90, -90);
-
         if(Input.GetKey(KeyCode.A))
         {
-            cards[0].eulerAngles += new Vector3(2.0f, 0, 0);
+            cards[0].Rotate(0, 2.0f, 0);
         } else if(Input.GetKey(KeyCode.D))
         {
-            cards[0].eulerAngles += new Vector3(-2.0f, 0, 0);
+            cards[0].Rotate(0, -2.0f, 0);
+            
         }
     }
 
