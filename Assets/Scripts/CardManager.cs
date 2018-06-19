@@ -52,11 +52,11 @@ public class CardManager : MonoBehaviour {
 
     public void CreateCard(GameObject obj, Vector3 objectPosition)
     {
-        float angle = 0;
+        Vector3 angle = new Vector3(0, 90, 90);
         if (obj.tag == "Card") {
-            angle = cards[0].eulerAngles.x;
+            angle = new Vector3(cards[0].eulerAngles.x, cards[0].eulerAngles.y, cards[0].eulerAngles.z);
         }
-        var clone = Instantiate(obj, objectPosition, Quaternion.Euler(angle, 90, 90), cardsParent.transform);
+        var clone = Instantiate(obj, objectPosition, Quaternion.Euler(angle), cardsParent.transform);
         cards.Add((Transform)clone.transform);
     }
 
