@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Destroyer : MonoBehaviour {
+public class CardDeleteZone : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
