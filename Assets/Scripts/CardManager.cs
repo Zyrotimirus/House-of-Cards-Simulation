@@ -11,6 +11,7 @@ public class CardManager : MonoBehaviour {
     private Vector3 mousePos;
 
     public bool creationMode = true;
+    public bool stopPhysics = false;
 
 	void Start () {
         cards = new List<Transform>();
@@ -28,6 +29,12 @@ public class CardManager : MonoBehaviour {
             EditMode(); 
         }
         cards[0].gameObject.SetActive(creationMode);
+
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            stopPhysics = !stopPhysics;
+            StopPhysics(stopPhysics);
+        }
     }
 
     public void CreationMode()
@@ -57,6 +64,11 @@ public class CardManager : MonoBehaviour {
             angle = new Vector3(cards[0].eulerAngles.x, cards[0].eulerAngles.y, cards[0].eulerAngles.z);
         }
         var clone = Instantiate(obj, objectPosition, Quaternion.Euler(angle), cardsParent.transform);
+        
+        if(clone.tag == "Card" && stopPhysics)
+        {
+            clone.GetComponent<Rigidbody>().isKinematic = stopPhysics;
+        }
         cards.Add((Transform)clone.transform);
     }
 
@@ -68,7 +80,6 @@ public class CardManager : MonoBehaviour {
         } else if(Input.GetKey(KeyCode.D))
         {
             cards[0].Rotate(0, -2.0f, 0);
-            
         }
     }
 
@@ -85,6 +96,35 @@ public class CardManager : MonoBehaviour {
     public void DeleteCard(GameObject card)
     {
         Destroy(card);
+    }
+
+    public void StopPhysics(bool stop)
+    {
+        foreach(Transform card in cards)
+        {
+            if(card.tag == "Card")
+            {
+                card.GetComponent<Rigidbody>().isKinematic = stop;
+            }
+        }
+    }
+
+    private IEnumerator Pause(int p)
+    {
+        Time.timeScale = 0.1f;
+        float pauseEndTime = Time.realtimeSinceStartup + 1;
+        while (Time.realtimeSinceStartup < pauseEndTime)
+        {
+            yield return 0;
+        }
+        Time.timeScale = 1;
+    }
+
+    private IEnumerator Pause2(int p)
+    {
+        Time.timeScale = 0.1f;
+        yield return new WaitForSeconds(p);
+        Time.timeScale = 1;
     }
 
 }
