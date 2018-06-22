@@ -148,7 +148,7 @@ public class CardManager : MonoBehaviour {
                 }
                 if(card.tag == "Card")
                 {
-                    card.GetComponent<Rigidbody>().AddForceAtPosition(new Vector3(0, 0.5f, 0.5f), transform.position, ForceMode.Impulse);
+                    card.GetComponent<Rigidbody>().AddForceAtPosition(new Vector3(0, 0.001f, 0.001f), transform.position, ForceMode.Impulse);
                 }
             }
         }
