@@ -20,21 +20,31 @@ public class CardManager : MonoBehaviour {
 	}
 	
 	void Update () {
-        if(Input.GetKeyDown(KeyCode.LeftShift)) {
-            creationMode = !creationMode;
-        }
-        if(creationMode) {
-            CreationMode();
-        } else {
-            EditMode(); 
-        }
-        cards[0].gameObject.SetActive(creationMode);
 
-        if (Input.GetKeyDown(KeyCode.W))
+        ModeChange();
+        CameraFree();
+
+        ActivateWind();
+
+        if (Input.GetKeyDown(KeyCode.LeftControl))
         {
             stopPhysics = !stopPhysics;
             StopPhysics(stopPhysics);
         }
+
+    }
+
+    public void ModeChange()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift)) {
+            creationMode = !creationMode;
+        }
+        if (creationMode) {
+            CreationMode();
+        } else {
+            EditMode();
+        }
+        cards[0].gameObject.SetActive(creationMode);
     }
 
     public void CreationMode()
@@ -57,6 +67,34 @@ public class CardManager : MonoBehaviour {
         
     }
 
+    public void CameraFree()
+    {
+        if (Input.GetMouseButton(1))
+        {
+            if (Input.GetKey(KeyCode.W))
+            {
+                Camera.main.transform.localPosition += new Vector3(0, 0, 0.05f);
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                Camera.main.transform.localPosition += new Vector3(0, 0, -0.05f);
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                Camera.main.transform.localPosition += new Vector3(-0.05f, 0, 0);
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                Camera.main.transform.localPosition += new Vector3(0.05f, 0, 0);
+            }
+            mousePos = Input.mousePosition;
+            mousePos.z = 0.1f;
+            Vector3 objectPos = Camera.main.ScreenToWorldPoint(mousePos);    
+
+            Camera.main.transform.LookAt(objectPos);
+        }
+    }
+
     public void CreateCard(GameObject obj, Vector3 objectPosition)
     {
         Vector3 angle = new Vector3(0, 90, 90);
@@ -74,10 +112,10 @@ public class CardManager : MonoBehaviour {
 
     public void RotateCard()
     {
-        if(Input.GetKey(KeyCode.A))
+        if(Input.GetKey(KeyCode.Q))
         {
             cards[0].Rotate(0, 2.0f, 0);
-        } else if(Input.GetKey(KeyCode.D))
+        } else if(Input.GetKey(KeyCode.E))
         {
             cards[0].Rotate(0, -2.0f, 0);
         }
@@ -96,6 +134,24 @@ public class CardManager : MonoBehaviour {
     public void DeleteCard(GameObject card)
     {
         Destroy(card);
+    }
+
+    public void ActivateWind()
+    {
+        if(Input.GetKey(KeyCode.Z))
+        {
+            foreach(Transform card in cards)
+            {
+                if(card == null)
+                {
+                    return;
+                }
+                if(card.tag == "Card")
+                {
+                    card.GetComponent<Rigidbody>().AddForceAtPosition(new Vector3(0, 0.5f, 0.5f), transform.position, ForceMode.Impulse);
+                }
+            }
+        }
     }
 
     public void StopPhysics(bool stop)
