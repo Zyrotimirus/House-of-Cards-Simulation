@@ -15,6 +15,7 @@ public class Card : MonoBehaviour {
 	void Update () {
 		
 	}
+
     private void OnCollisionEnter(Collision collision)
     {
         rb.velocity = collision.rigidbody.velocity * -1;
