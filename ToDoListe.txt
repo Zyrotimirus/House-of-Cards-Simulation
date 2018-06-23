@@ -1,0 +1,37 @@
+
+ --- ToDo Liste ---
+
+- Karten Texturen
+- Automatische Kartenhaus Generation (nach Formel: Berechnung der Kartenzahl, Wikipedia)
+- Reibung der Karten
+- Impulse bei Kartenfall
+- Karten Snap-Funktion für besseres plazieren
+	- Karten ineinander spawnen verhindern
+- Karten Platzierung verbessern, auf Schiene platzieren oder Freihand
+- Vier Karten Kammern unterstützen (Karten seitwärts legen)
+- Für Doku Links speichern unten in Datei einsetzten, wenn möglich
+- User Interface
+
+- weitere Punkte bitte hinzufügen
+
+
+
+
+
+
+- - - Links für Dokumentation - - -
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
