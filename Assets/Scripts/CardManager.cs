@@ -16,7 +16,6 @@ public class CardManager : MonoBehaviour {
 	void Start () {
         cards = new List<Transform>();
         CreateCard(preparedCard, new Vector3(0,0,0));
-
 	}
 	
 	void Update () {
@@ -118,6 +117,10 @@ public class CardManager : MonoBehaviour {
         } else if(Input.GetKey(KeyCode.E))
         {
             cards[0].Rotate(0, -2.0f, 0);
+        }
+        if(Input.GetKeyDown(KeyCode.Tab))
+        {
+            cards[0].Rotate(0, cards[0].eulerAngles.y + 180, 0);
         }
     }
 
