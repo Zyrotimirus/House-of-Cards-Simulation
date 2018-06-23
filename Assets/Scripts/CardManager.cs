@@ -7,21 +7,33 @@ public class CardManager : MonoBehaviour {
     public GameObject card;
     public GameObject preparedCard;
     public GameObject cardsParent;
+    [Tooltip("The percentage of")]
+    public float spacePercentage;
+    public float cameraSpeed = 2f;
+
     private List<Transform> cards;
     private Vector3 mousePos;
+    private float zAxis = 0;
+    private float cameraYaw = 0;
+    private float cameraPitch = 0;
 
     public bool creationMode = true;
+    public bool lockedMode = true;
     public bool stopPhysics = false;
+    
 
-	void Start () {
+    void Start () {
         cards = new List<Transform>();
         CreateCard(preparedCard, new Vector3(0,0,0));
-	}
+
+        zAxis = GameObject.Find("Table").transform.position.z;
+    }
 	
 	void Update () {
 
         ModeChange();
         CameraFree();
+        moveCardHouse();
 
         ActivateWind();
 
@@ -30,7 +42,6 @@ public class CardManager : MonoBehaviour {
             stopPhysics = !stopPhysics;
             StopPhysics(stopPhysics);
         }
-
     }
 
     public void ModeChange()
@@ -51,13 +62,17 @@ public class CardManager : MonoBehaviour {
         mousePos = Input.mousePosition;
         mousePos.z = 5.0f;
         Vector3 objectPos = Camera.main.ScreenToWorldPoint(mousePos);
-        cards[0].position = new Vector3(objectPos.x, objectPos.y, objectPos.z);
-
+        if (lockedMode)
+        {
+            objectPos.z = zAxis;
+        }
+        cards[0].position = new Vector3(objectPos.x, objectPos.y, zAxis);
+        
         RotateCard();
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            CreateCard(card, objectPos);
+            CreateCard(card, new Vector3(objectPos.x, objectPos.y, zAxis));
         }
     }
 
@@ -68,6 +83,7 @@ public class CardManager : MonoBehaviour {
 
     public void CameraFree()
     {
+
         if (Input.GetMouseButton(1))
         {
             if (Input.GetKey(KeyCode.W))
@@ -86,11 +102,23 @@ public class CardManager : MonoBehaviour {
             {
                 Camera.main.transform.localPosition += new Vector3(0.05f, 0, 0);
             }
-            mousePos = Input.mousePosition;
-            mousePos.z = 0.1f;
-            Vector3 objectPos = Camera.main.ScreenToWorldPoint(mousePos);    
 
-            Camera.main.transform.LookAt(objectPos);
+            cameraPitch -= cameraSpeed * Input.GetAxis("Mouse Y");
+            cameraYaw += cameraSpeed * Input.GetAxis("Mouse X");
+
+            Camera.main.transform.eulerAngles = new Vector3(cameraPitch, cameraYaw, 0.0f);
+        }
+    }
+
+    public void moveCardHouse()
+    {
+        if (Input.GetKeyDown(KeyCode.Plus))
+        {
+            zAxis += (preparedCard.GetComponent<Renderer>().bounds.size.z * (1 + spacePercentage / 100));
+        }
+        if (Input.GetKeyDown(KeyCode.Minus))
+        {
+            zAxis -= (preparedCard.GetComponent<Renderer>().bounds.size.z * (1 + spacePercentage / 100));
         }
     }
 
@@ -167,23 +195,4 @@ public class CardManager : MonoBehaviour {
             }
         }
     }
-
-    private IEnumerator Pause(int p)
-    {
-        Time.timeScale = 0.1f;
-        float pauseEndTime = Time.realtimeSinceStartup + 1;
-        while (Time.realtimeSinceStartup < pauseEndTime)
-        {
-            yield return 0;
-        }
-        Time.timeScale = 1;
-    }
-
-    private IEnumerator Pause2(int p)
-    {
-        Time.timeScale = 0.1f;
-        yield return new WaitForSeconds(p);
-        Time.timeScale = 1;
-    }
-
 }
