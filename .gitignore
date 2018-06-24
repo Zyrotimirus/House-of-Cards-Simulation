@@ -1,5 +1,7 @@
 
 Library/
+Temp/
+.vs/
 HouseOfCardsSimulation.sln
 HouseOfCardsSimulation.csproj
 .vs/HouseOfCardsSimulation/v15/Server/sqlite3/storage.ide
