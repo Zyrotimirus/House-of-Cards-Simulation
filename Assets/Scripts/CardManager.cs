@@ -17,6 +17,8 @@ public class CardManager : MonoBehaviour {
     private float cameraYaw = 0;
     private float cameraPitch = 0;
 
+    public int globalCardID = 0;
+
     public bool creationMode = true;
     public bool lockedMode = true;
     public bool stopPhysics = false;
@@ -33,7 +35,7 @@ public class CardManager : MonoBehaviour {
 
         ModeChange();
         CameraFree();
-        moveCardHouse();
+        MoveSpawningRow();
 
         ActivateWind();
 
@@ -61,10 +63,16 @@ public class CardManager : MonoBehaviour {
     {
         mousePos = Input.mousePosition;
         mousePos.z = 5.0f;
+        
         Vector3 objectPos = Camera.main.ScreenToWorldPoint(mousePos);
         if (lockedMode)
         {
             objectPos.z = zAxis;
+        }
+
+        if (objectPos.y <= 6.5f)
+        {
+            objectPos.y = 6.5f;
         }
         cards[0].position = new Vector3(objectPos.x, objectPos.y, zAxis);
         
@@ -111,7 +119,7 @@ public class CardManager : MonoBehaviour {
         }
     }
 
-    public void moveCardHouse()
+    public void MoveSpawningRow()
     {
         if (Input.GetKeyDown(KeyCode.Equals))
         {
@@ -130,12 +138,17 @@ public class CardManager : MonoBehaviour {
             angle = new Vector3(cards[0].eulerAngles.x, cards[0].eulerAngles.y, cards[0].eulerAngles.z);
         }
         var clone = Instantiate(obj, objectPosition, Quaternion.Euler(angle), cardsParent.transform);
-        
-        if(clone.tag == "Card" && stopPhysics)
+
+        if(clone.tag == "Card")
         {
-            clone.GetComponent<Rigidbody>().isKinematic = stopPhysics;
+            clone.GetComponent<Card>().id = globalCardID;
+            if(stopPhysics)
+            {
+                clone.GetComponent<Rigidbody>().isKinematic = stopPhysics;
+            }
         }
         cards.Add((Transform)clone.transform);
+        globalCardID++;
     }
 
     public void RotateCard()
@@ -149,7 +162,7 @@ public class CardManager : MonoBehaviour {
         }
         if(Input.GetKeyDown(KeyCode.Tab))
         {
-            cards[0].Rotate(0, cards[0].eulerAngles.y + 180, 0);
+            cards[0].Rotate(0, cards[0].localEulerAngles.y * -1, 0);
         }
     }
 
@@ -163,17 +176,6 @@ public class CardManager : MonoBehaviour {
 
     }
 
-    public void DeleteCard()
-    {
-        foreach(Transform card in cards)
-        {
-            if(card == null)
-            {
-
-            }
-        }
-    }
-
     public void ActivateWind()
     {
         if(Input.GetKey(KeyCode.Z))
@@ -182,7 +184,7 @@ public class CardManager : MonoBehaviour {
             {
                 if(card == null)
                 {
-                    return;    
+                    cards.Remove(card);  
                 }
                 else if(card.tag == "Card")
                 {
@@ -196,7 +198,11 @@ public class CardManager : MonoBehaviour {
     {
         foreach(Transform card in cards)
         {
-            if(card.tag == "Card")
+            if (card == null)
+            {
+                cards.Remove(card);
+            }
+            else if (card.tag == "Card")
             {
                 card.GetComponent<Rigidbody>().isKinematic = stop;
             }

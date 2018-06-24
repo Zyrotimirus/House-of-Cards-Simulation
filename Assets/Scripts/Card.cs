@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Card : MonoBehaviour {
 
+    public int id;
     private Rigidbody rb;
 
     Renderer m_Renderer;
-	// Use this for initialization
+	
 	void Start () {
         rb = gameObject.GetComponent<Rigidbody>();
         
@@ -17,15 +18,12 @@ public class Card : MonoBehaviour {
         m_Renderer.material.mainTexture = texture;
     }
 	
-	// Update is called once per frame
 	void Update () {
 		
 	}
 
     private void OnCollisionEnter(Collision collision)
     {
-        rb.velocity = collision.rigidbody.velocity;
+        //rb.velocity = collision.rigidbody.velocity;
     }
-
-
 }
