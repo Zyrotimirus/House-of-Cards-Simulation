@@ -26,13 +26,14 @@ public class CardManager : MonoBehaviour {
 
     void Start () {
         cards = new List<Transform>();
-        CreateCard(preparedCard, new Vector3(0,0,0));
+        CreateCard(preparedCard, new Vector3(0,0,0), false, 0);
 
         zAxis = GameObject.Find("Table").transform.position.z;
+
+        CreateHouseAutomatically(1, 1);
     }
 	
 	void Update () {
-
         ModeChange();
         CameraFree();
         MoveSpawningRow();
@@ -80,7 +81,7 @@ public class CardManager : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            CreateCard(card, new Vector3(objectPos.x, objectPos.y, zAxis));
+            CreateCard(card, new Vector3(objectPos.x, objectPos.y, zAxis), false, 0);
         }
     }
 
@@ -131,11 +132,15 @@ public class CardManager : MonoBehaviour {
         }
     }
 
-    public void CreateCard(GameObject obj, Vector3 objectPosition)
+    public void CreateCard(GameObject obj, Vector3 objectPosition, bool autoCreation, float autoAngle)
     {
         Vector3 angle = new Vector3(0, 90, 90);
-        if (obj.tag == "Card") {
+        if (obj.tag == "Card" && !autoCreation) {
             angle = new Vector3(cards[0].eulerAngles.x, cards[0].eulerAngles.y, cards[0].eulerAngles.z);
+        }
+        if(autoCreation)
+        {
+            angle = new Vector3(cards[0].eulerAngles.x + autoAngle, cards[0].eulerAngles.y, cards[0].eulerAngles.z);
         }
         var clone = Instantiate(obj, objectPosition, Quaternion.Euler(angle), cardsParent.transform);
 
@@ -206,6 +211,38 @@ public class CardManager : MonoBehaviour {
             {
                 card.GetComponent<Rigidbody>().isKinematic = stop;
             }
+        }
+    }
+
+    public void CreateHouseAutomatically(int width, int height)
+    {
+        // for( i < height )
+        // CreateCardRow(width, ?);
+
+        CreateCardRow(24, -1);
+
+    }
+
+    public void CreateCardRow(int cardCount, float startPosition)
+    {
+        bool booleanSwitch = true;
+        for (int i = 1; i <= cardCount; i++)
+        {
+            if (booleanSwitch)
+            {
+                CreateCard(card, new Vector3(startPosition + i * 0.3f, 6.5f, -6.0f), true, 10);
+            }
+            else
+            {
+                CreateCard(card, new Vector3(startPosition + i * 0.3f, 6.5f, -6.0f), true, -10);
+            }
+            booleanSwitch = !booleanSwitch;
+
+            if (i % 3 == 0)
+            {
+                CreateCard(card, new Vector3(i * 0.225f - 1, 7f, -6.0f), true, 90);
+            }
+            
         }
     }
 }
