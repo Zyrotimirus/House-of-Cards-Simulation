@@ -88,25 +88,26 @@ public class CardManager : MonoBehaviour {
         {
             if (Input.GetKey(KeyCode.W))
             {
-                Camera.main.transform.localPosition += new Vector3(0, 0, 0.05f);
+                Camera.main.transform.localPosition += Camera.main.transform.forward / 10;
             }
             if (Input.GetKey(KeyCode.S))
             {
-                Camera.main.transform.localPosition += new Vector3(0, 0, -0.05f);
+                Camera.main.transform.localPosition -= Camera.main.transform.forward / 10;
             }
+
             if (Input.GetKey(KeyCode.A))
             {
-                Camera.main.transform.localPosition += new Vector3(-0.05f, 0, 0);
+                Camera.main.transform.localPosition -= Camera.main.transform.right / 10;
             }
             if (Input.GetKey(KeyCode.D))
             {
-                Camera.main.transform.localPosition += new Vector3(0.05f, 0, 0);
+                Camera.main.transform.localPosition += Camera.main.transform.right / 10;
             }
 
             cameraPitch -= cameraSpeed * Input.GetAxis("Mouse Y");
             cameraYaw += cameraSpeed * Input.GetAxis("Mouse X");
 
-            Camera.main.transform.eulerAngles = new Vector3(cameraPitch, cameraYaw, 0.0f);
+            Camera.main.transform.localEulerAngles = new Vector3(cameraPitch, cameraYaw, 0.0f);
         }
     }
 
