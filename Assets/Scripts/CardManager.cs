@@ -163,9 +163,15 @@ public class CardManager : MonoBehaviour {
 
     }
 
-    public void DeleteCard(GameObject card)
+    public void DeleteCard()
     {
-        Destroy(card);
+        foreach(Transform card in cards)
+        {
+            if(card == null)
+            {
+
+            }
+        }
     }
 
     public void ActivateWind()
@@ -176,9 +182,9 @@ public class CardManager : MonoBehaviour {
             {
                 if(card == null)
                 {
-                    return;
+                    return;    
                 }
-                if(card.tag == "Card")
+                else if(card.tag == "Card")
                 {
                     card.GetComponent<Rigidbody>().AddForceAtPosition(new Vector3(0, 0.001f, 0.001f), transform.position, ForceMode.Impulse);
                 }
