@@ -39,19 +39,10 @@ public class CardManager : MonoBehaviour {
         MoveSpawningRow();
 
         ActivateWind();
-
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            stopPhysics = !stopPhysics;
-            StopPhysics(stopPhysics);
-        }
     }
 
     public void ModeChange()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift)) {
-            creationMode = !creationMode;
-        }
         if (creationMode) {
             CreationMode();
         } else {
@@ -122,13 +113,16 @@ public class CardManager : MonoBehaviour {
 
     public void MoveSpawningRow()
     {
-        if (Input.GetKeyDown(KeyCode.Equals))
+        if (lockedMode)
         {
-            zAxis += (preparedCard.GetComponent<Renderer>().bounds.size.y * (1 + spacePercentage / 100));
-        }
-        if (Input.GetKeyDown(KeyCode.Minus))
-        {
-            zAxis -= (preparedCard.GetComponent<Renderer>().bounds.size.y * (1 + spacePercentage / 100));
+            if (Input.GetKeyDown(KeyCode.Equals))
+            {
+                zAxis += (preparedCard.GetComponent<Renderer>().bounds.size.y * (1 + spacePercentage / 100));
+            }
+            if (Input.GetKeyDown(KeyCode.Minus))
+            {
+                zAxis -= (preparedCard.GetComponent<Renderer>().bounds.size.y * (1 + spacePercentage / 100));
+            }
         }
     }
 
@@ -212,6 +206,23 @@ public class CardManager : MonoBehaviour {
                 card.GetComponent<Rigidbody>().isKinematic = stop;
             }
         }
+    }
+
+    public void FlipPhysic()
+    {
+        stopPhysics = !stopPhysics;
+        StopPhysics(stopPhysics);
+    }
+
+    public void FlipCreationMode()
+    {
+        creationMode = !creationMode;
+        ModeChange();
+    }
+
+    public void FlipLockedMode()
+    {
+        lockedMode = !lockedMode;
     }
 
     public void CreateHouseAutomatically(int width, int height)
