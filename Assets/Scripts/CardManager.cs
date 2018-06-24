@@ -113,13 +113,13 @@ public class CardManager : MonoBehaviour {
 
     public void moveCardHouse()
     {
-        if (Input.GetKeyDown(KeyCode.Plus))
+        if (Input.GetKeyDown(KeyCode.Equals))
         {
-            zAxis += (preparedCard.GetComponent<Renderer>().bounds.size.z * (1 + spacePercentage / 100));
+            zAxis += (preparedCard.GetComponent<Renderer>().bounds.size.y * (1 + spacePercentage / 100));
         }
         if (Input.GetKeyDown(KeyCode.Minus))
         {
-            zAxis -= (preparedCard.GetComponent<Renderer>().bounds.size.z * (1 + spacePercentage / 100));
+            zAxis -= (preparedCard.GetComponent<Renderer>().bounds.size.y * (1 + spacePercentage / 100));
         }
     }
 
