@@ -17,10 +17,6 @@ public class Card : MonoBehaviour {
         Texture2D texture = (Texture2D)textures[Random.Range(0, textures.Length)];
         m_Renderer.material.mainTexture = texture;
     }
-	
-	void Update () {
-		
-	}
 
     private void OnCollisionEnter(Collision collision)
     {
