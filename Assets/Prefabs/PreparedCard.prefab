@@ -21,8 +21,6 @@ GameObject:
   - component: {fileID: 4845166501590570}
   - component: {fileID: 33136384567927028}
   - component: {fileID: 23516646461706774}
-  - component: {fileID: 64458389865424582}
-  - component: {fileID: 114342184999408314}
   m_Layer: 0
   m_Name: PreparedCard
   m_TagString: GhostCard
@@ -83,29 +81,4 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1729352565312826}
-  m_Mesh: {fileID: 4300000, guid: 27bc5023ac6ce514c991e82714a6cad9, type: 3}
---- !u!64 &64458389865424582
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1729352565312826}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Convex: 1
-  m_InflateMesh: 0
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 4300000, guid: 27bc5023ac6ce514c991e82714a6cad9, type: 3}
---- !u!114 &114342184999408314
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1729352565312826}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0aa34cd640411e249828747549f79a2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Mesh: {fileID: 4300000, guid: a9a63698698543d478bbd9a52e4a5581, type: 3}

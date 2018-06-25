@@ -39,6 +39,7 @@ public class CardManager : MonoBehaviour {
         MoveSpawningRow();
 
         ActivateWind();
+        cards.RemoveAll(card => card == null);
     }
 
     public void ModeChange()
@@ -179,13 +180,12 @@ public class CardManager : MonoBehaviour {
     {
         if(Input.GetKey(KeyCode.Z))
         {
-            foreach(Transform card in cards)
+            //Debug.Log("Cards length davor = " + cards.Count);
+            
+            //Debug.Log("Cards length danach = " + cards.Count);
+            foreach (Transform card in cards)
             {
-                if(card == null)
-                {
-                    cards.Remove(card);  
-                }
-                else if(card.tag == "Card")
+                if(card.tag == "Card")
                 {
                     card.GetComponent<Rigidbody>().AddForceAtPosition(new Vector3(0, 0.001f, 0.001f), transform.position, ForceMode.Impulse);
                 }
