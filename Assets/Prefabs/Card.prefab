@@ -125,3 +125,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
+  minimumCardFrictionMoving: 0.1
+  maximumCardFrictionMoving: 0.9
+  cardFrictionStatic: 1
