@@ -230,10 +230,11 @@ public class CardManager : MonoBehaviour {
 
         StartCoroutine(CreateCardRow(6, -3, 0, 0, 0));
 
-        StartCoroutine(CreateCardRow(5, -2.66f, 1f, 0, 1));
+        StartCoroutine(CreateCardRow(5, -2.66f, 0.9f, 0, 2));
 
-        StartCoroutine(CreateCardRow(4, -2.33f, 2f, 0, 2));
+        StartCoroutine(CreateCardRow(4, -2.33f, 1.8f, 0, 4));
 
+        StartCoroutine(CreateCardRow(3, -2f, 2.7f, 0, 6));
     }
 
     IEnumerator CreateCardRow(int triangularPillars, float startPosition, float floor, float axis, int time)
@@ -245,18 +246,19 @@ public class CardManager : MonoBehaviour {
         {
             if (booleanSwitch)
             {
-                CreateCard(card, new Vector3(startPosition + i * 0.35f, 6.5f + floor, -6.0f + axis), true, 10);
+                CreateCard(card, new Vector3(startPosition + i * 0.35f, 6.4f + floor, -6.0f + axis), true, 10);
             }
             else
             {
-                CreateCard(card, new Vector3(startPosition + i * 0.35f, 6.5f + floor, -6.0f + axis), true, -10);
+                CreateCard(card, new Vector3(startPosition + i * 0.35f, 6.4f + floor, -6.0f + axis), true, -10);
             }
             booleanSwitch = !booleanSwitch;
         }
-        
+
+        yield return new WaitForSeconds(1);
         for(int i = 1; i < triangularPillars; i++)
         {
-           CreateCard(card, new Vector3(startPosition + i * 0.865f - ((i - 1) *0.16f), 7.3f + floor, -6.0f + axis), true, 90);
-        }    
+           CreateCard(card, new Vector3(startPosition + i * 0.865f - ((i - 1) *0.16f), 7.2f + floor, -6.0f + axis), true, 90);
+        }
     }
 }
