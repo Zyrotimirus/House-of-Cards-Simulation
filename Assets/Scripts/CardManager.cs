@@ -10,6 +10,8 @@ public class CardManager : MonoBehaviour {
     [Tooltip("The percentage of")]
     public float spacePercentage;
     public float cameraSpeed = 2f;
+    public int floors;
+    public int pillars;
 
     private List<Transform> cards;
     private Vector3 mousePos;
@@ -30,7 +32,10 @@ public class CardManager : MonoBehaviour {
 
         zAxis = GameObject.Find("Table").transform.position.z;
 
-        CreateHouseAutomatically(1, 1);
+        CreateHouseAutomatically(pillars, floors);
+        Debug.Log("Card anglesize whatever = " + GetxSize(10.0f));
+        Debug.Log("card.GetComponent<Renderer>().bounds.size.x = " + card.GetComponent<Renderer>().bounds.size.x);
+        Debug.Log("Mathf.Cos(10.0f) = " + Mathf.Acos(10.0f));
     }
 	
 	void Update () {
@@ -135,7 +140,7 @@ public class CardManager : MonoBehaviour {
         }
         if(autoCreation)
         {
-            angle = new Vector3(cards[0].eulerAngles.x + autoAngle, cards[0].eulerAngles.y, cards[0].eulerAngles.z);
+            angle = new Vector3(autoAngle, 90, 90);
         }
         var clone = Instantiate(obj, objectPosition, Quaternion.Euler(angle), cardsParent.transform);
 
@@ -185,7 +190,7 @@ public class CardManager : MonoBehaviour {
             //Debug.Log("Cards length danach = " + cards.Count);
             foreach (Transform card in cards)
             {
-                if(card.tag == "Card")
+                if(card != null && card.tag == "Card")
                 {
                     card.GetComponent<Rigidbody>().AddForceAtPosition(new Vector3(0, 0.001f, 0.001f), transform.position, ForceMode.Impulse);
                 }
@@ -225,16 +230,38 @@ public class CardManager : MonoBehaviour {
         lockedMode = !lockedMode;
     }
 
-    public void CreateHouseAutomatically(int triangularPillars, int maxHeight)
+    public void CreateHouseAutomatically(int pillars, int floors)
     {
+        if (floors > pillars)
+        {
+            return;
+        }
+        
+        for(int i = 0; i < floors; i++)
+        {
+            StartCoroutine(CreateCardRow(pillars - i, ( i * 0.33333f ) + ( - pillars / 2.66666f ), i * 0.8f, 0, i*2));
+        }
 
-        StartCoroutine(CreateCardRow(6, -3, 0, 0, 0));
 
+        /*StartCoroutine(CreateCardRow(12, -3, 0, 0, 0));
+
+<<<<<<< HEAD
         StartCoroutine(CreateCardRow(5, -2.6665f, 0.9f, 0, 10));
 
         StartCoroutine(CreateCardRow(4, -2.3335f, 1.8f, 0, 20));
 
         StartCoroutine(CreateCardRow(3, -2f, 2.7f, 0, 30));
+=======
+        StartCoroutine(CreateCardRow(11, -2.6665f, 0.9f, 0, 2));
+
+        StartCoroutine(CreateCardRow(10, -2.3335f, 1.8f, 0, 4));
+
+        StartCoroutine(CreateCardRow(9, -2f, 2.7f, 0, 6));
+
+        StartCoroutine(CreateCardRow(8, -1.6665f, 3.6f, 0, 8));
+
+        StartCoroutine(CreateCardRow(7, -1.3335f, 4.5f, 0, 10));*/
+>>>>>>> cee5a6ebb8d47e5add12ce1c08a1b8ac0366c4ba
     }
 
     IEnumerator CreateCardRow(int triangularPillars, float startPosition, float floor, float axis, int time)
@@ -258,7 +285,13 @@ public class CardManager : MonoBehaviour {
         yield return new WaitForSeconds(5);
         for(int i = 1; i < triangularPillars; i++)
         {
-           CreateCard(card, new Vector3(startPosition + i * 0.865f - ((i - 1) * 0.16f), 7f + floor, -6.0f + axis), true, 90);
+           CreateCard(card, new Vector3(startPosition + (i * 0.863f - ((i - 1) * 0.16f)), 7.0f + floor, -6.0f + axis), true, 90);
         }
     }
+
+    public float GetxSize(float angle)
+    {
+        return card.GetComponent<Renderer>().bounds.size.x * Mathf.Cos(angle);
+    }
 }
+    
