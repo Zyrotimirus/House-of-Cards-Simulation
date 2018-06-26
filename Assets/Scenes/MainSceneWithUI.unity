@@ -1737,8 +1737,8 @@ MonoBehaviour:
   cardsParent: {fileID: 180878813}
   spacePercentage: 0
   cameraSpeed: 2
-  floors: 5
-  pillars: 12
+  floors: 6
+  pillars: 6
   globalCardID: 0
   creationMode: 1
   lockedMode: 1

@@ -7,6 +7,8 @@ public class CardManager : MonoBehaviour {
     public GameObject card;
     public GameObject preparedCard;
     public GameObject cardsParent;
+    public Transform selectedCard;
+
     [Tooltip("The percentage of")]
     public float spacePercentage;
     public float cameraSpeed = 2f;
@@ -50,6 +52,7 @@ public class CardManager : MonoBehaviour {
     public void ModeChange()
     {
         if (creationMode) {
+            selectedCard = null;
             CreationMode();
         } else {
             EditMode();
@@ -63,6 +66,7 @@ public class CardManager : MonoBehaviour {
         mousePos.z = 5.0f;
         
         Vector3 objectPos = Camera.main.ScreenToWorldPoint(mousePos);
+
         if (lockedMode)
         {
             objectPos.z = zAxis;
@@ -84,7 +88,50 @@ public class CardManager : MonoBehaviour {
 
     public void EditMode()
     {
-        
+        SelectCard();
+
+        MoveCard();
+    }
+
+    public void SelectCard()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit hitInfo = new RaycastHit();
+            bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
+
+            if (hit)
+            {
+                if (hitInfo.transform.tag == "Card")
+                {
+                    Debug.Log("Card ID: " + hitInfo.transform.GetComponent<Card>().id);
+                    selectedCard = hitInfo.transform;
+                }
+            }
+        }
+    }
+
+    public void MoveCard()
+    {
+        if (Input.GetKey(KeyCode.Space) && selectedCard != null)
+        {
+            mousePos = Input.mousePosition;
+            mousePos.z = 5.0f;
+
+            Vector3 objectPos = Camera.main.ScreenToWorldPoint(mousePos);
+
+            if (lockedMode)
+            {
+                objectPos.z = zAxis;
+            }
+
+            if (objectPos.y <= 6.5f)
+            {
+                objectPos.y = 6.5f;
+            }
+
+            selectedCard.position = new Vector3(objectPos.x, objectPos.y, zAxis);
+        }
     }
 
     public void CameraFree()
@@ -171,16 +218,6 @@ public class CardManager : MonoBehaviour {
         }
     }
 
-    public void SelectCard()
-    {
-
-    }
-
-    public void MoveCard()
-    {
-
-    }
-
     public void ActivateWind()
     {
         if(Input.GetKey(KeyCode.Z))
@@ -241,27 +278,6 @@ public class CardManager : MonoBehaviour {
         {
             StartCoroutine(CreateCardRow(pillars - i, ( i * 0.33333f ) + ( - pillars / 2.66666f ), i * 0.8f, 0, i*2));
         }
-
-
-        /*StartCoroutine(CreateCardRow(12, -3, 0, 0, 0));
-
-<<<<<<< HEAD
-        StartCoroutine(CreateCardRow(5, -2.6665f, 0.9f, 0, 10));
-
-        StartCoroutine(CreateCardRow(4, -2.3335f, 1.8f, 0, 20));
-
-        StartCoroutine(CreateCardRow(3, -2f, 2.7f, 0, 30));
-=======
-        StartCoroutine(CreateCardRow(11, -2.6665f, 0.9f, 0, 2));
-
-        StartCoroutine(CreateCardRow(10, -2.3335f, 1.8f, 0, 4));
-
-        StartCoroutine(CreateCardRow(9, -2f, 2.7f, 0, 6));
-
-        StartCoroutine(CreateCardRow(8, -1.6665f, 3.6f, 0, 8));
-
-        StartCoroutine(CreateCardRow(7, -1.3335f, 4.5f, 0, 10));*/
->>>>>>> cee5a6ebb8d47e5add12ce1c08a1b8ac0366c4ba
     }
 
     IEnumerator CreateCardRow(int triangularPillars, float startPosition, float floor, float axis, int time)
@@ -282,7 +298,7 @@ public class CardManager : MonoBehaviour {
             booleanSwitch = !booleanSwitch;
         }
 
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(1);
         for(int i = 1; i < triangularPillars; i++)
         {
            CreateCard(card, new Vector3(startPosition + (i * 0.863f - ((i - 1) * 0.16f)), 7.0f + floor, -6.0f + axis), true, 90);
