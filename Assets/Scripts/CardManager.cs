@@ -230,11 +230,11 @@ public class CardManager : MonoBehaviour {
 
         StartCoroutine(CreateCardRow(6, -3, 0, 0, 0));
 
-        StartCoroutine(CreateCardRow(5, -2.6665f, 0.9f, 0, 2));
+        StartCoroutine(CreateCardRow(5, -2.6665f, 0.9f, 0, 10));
 
-        StartCoroutine(CreateCardRow(4, -2.3335f, 1.8f, 0, 4));
+        StartCoroutine(CreateCardRow(4, -2.3335f, 1.8f, 0, 20));
 
-        StartCoroutine(CreateCardRow(3, -2f, 2.7f, 0, 6));
+        StartCoroutine(CreateCardRow(3, -2f, 2.7f, 0, 30));
     }
 
     IEnumerator CreateCardRow(int triangularPillars, float startPosition, float floor, float axis, int time)
@@ -255,7 +255,7 @@ public class CardManager : MonoBehaviour {
             booleanSwitch = !booleanSwitch;
         }
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(5);
         for(int i = 1; i < triangularPillars; i++)
         {
            CreateCard(card, new Vector3(startPosition + i * 0.865f - ((i - 1) * 0.16f), 7f + floor, -6.0f + axis), true, 90);
