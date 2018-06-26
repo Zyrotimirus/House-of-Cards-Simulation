@@ -1735,10 +1735,11 @@ MonoBehaviour:
   preparedCard: {fileID: 1729352565312826, guid: 9cd6ff36097468c489df8c6e6581353c,
     type: 2}
   cardsParent: {fileID: 180878813}
+  selectedCard: {fileID: 0}
   spacePercentage: 0
   cameraSpeed: 2
-  floors: 6
-  pillars: 6
+  floors: 8
+  pillars: 8
   globalCardID: 0
   creationMode: 1
   lockedMode: 1

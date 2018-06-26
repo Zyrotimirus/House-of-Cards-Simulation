@@ -62,27 +62,13 @@ public class CardManager : MonoBehaviour {
 
     public void CreationMode()
     {
-        mousePos = Input.mousePosition;
-        mousePos.z = 5.0f;
-        
-        Vector3 objectPos = Camera.main.ScreenToWorldPoint(mousePos);
-
-        if (lockedMode)
-        {
-            objectPos.z = zAxis;
-        }
-
-        if (objectPos.y <= 6.5f)
-        {
-            objectPos.y = 6.5f;
-        }
-        cards[0].position = new Vector3(objectPos.x, objectPos.y, zAxis);
+        cards[0].position = new Vector3(CalculateMousePosition(6.5f, 5).x, CalculateMousePosition(6.5f, 5).y, zAxis);
         
         RotateCard();
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            CreateCard(card, new Vector3(objectPos.x, objectPos.y, zAxis), false, 0);
+            CreateCard(card, new Vector3(CalculateMousePosition(6.5f, 5).x, CalculateMousePosition(6.5f, 5).y, zAxis), false, 0);
         }
     }
 
@@ -115,23 +101,28 @@ public class CardManager : MonoBehaviour {
     {
         if (Input.GetKey(KeyCode.Space) && selectedCard != null)
         {
-            mousePos = Input.mousePosition;
-            mousePos.z = 5.0f;
-
-            Vector3 objectPos = Camera.main.ScreenToWorldPoint(mousePos);
-
-            if (lockedMode)
-            {
-                objectPos.z = zAxis;
-            }
-
-            if (objectPos.y <= 6.5f)
-            {
-                objectPos.y = 6.5f;
-            }
-
-            selectedCard.position = new Vector3(objectPos.x, objectPos.y, zAxis);
+            selectedCard.position = new Vector3(CalculateMousePosition(6.5f, 5).x, CalculateMousePosition(6.5f, 5).y, zAxis);
         }
+    }
+
+    public Vector3 CalculateMousePosition(float positionY, float positionZ)
+    {
+        mousePos = Input.mousePosition;
+        mousePos.z = positionZ;
+
+        Vector3 objectPos = Camera.main.ScreenToWorldPoint(mousePos);
+
+        if (lockedMode)
+        {
+            objectPos.z = zAxis;
+        }
+
+        if (objectPos.y <= positionY)
+        {
+            objectPos.y = positionY;
+        }
+
+        return objectPos;
     }
 
     public void CameraFree()
