@@ -16,6 +16,6 @@ public class SetSlider : MonoBehaviour {
 
     void SetValue()
     {
-        SliderToChange.value = gravity;
+        SliderToChange.value = gravity*-1.0f;
     }
 }

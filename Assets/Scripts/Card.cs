@@ -15,7 +15,7 @@ public class Card : MonoBehaviour {
     Renderer m_Renderer;
 	
 	void Start () {
-        rb = gameObject.GetComponent<Rigidbody>();
+        rb = gameObject.GetComponent<Rigidbody>(); 
         
         m_Renderer = GetComponent<Renderer>();
         Object[] textures = Resources.LoadAll("Textures/card_textures", typeof(Texture2D));
