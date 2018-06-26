@@ -31,22 +31,15 @@ public class Card : MonoBehaviour {
         {
             if (GetComponent<Collider>().material.dynamicFriction > minimumCardFrictionMoving)
             {
-                GetComponent<Collider>().material.dynamicFriction -= 0.01f;
+                GetComponent<Collider>().material.dynamicFriction -= 0.03f;
             }
         }
         else if (curVeloDifference >= 0.1f)
         {
             if (GetComponent<Collider>().material.dynamicFriction < maximumCardFrictionMoving)
             {
-                GetComponent<Collider>().material.dynamicFriction += 0.01f;
+                GetComponent<Collider>().material.dynamicFriction += 0.03f;
             }
         }
-    }
-
-
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        //rb.velocity = collision.rigidbody.velocity;
     }
 }

@@ -35,9 +35,6 @@ public class CardManager : MonoBehaviour {
         zAxis = GameObject.Find("Table").transform.position.z;
 
         CreateHouseAutomatically(pillars, floors);
-        Debug.Log("Card anglesize whatever = " + GetxSize(10.0f));
-        Debug.Log("card.GetComponent<Renderer>().bounds.size.x = " + card.GetComponent<Renderer>().bounds.size.x);
-        Debug.Log("Mathf.Cos(10.0f) = " + Mathf.Acos(10.0f));
     }
 	
 	void Update () {
@@ -213,9 +210,6 @@ public class CardManager : MonoBehaviour {
     {
         if(Input.GetKey(KeyCode.Z))
         {
-            //Debug.Log("Cards length davor = " + cards.Count);
-            
-            //Debug.Log("Cards length danach = " + cards.Count);
             foreach (Transform card in cards)
             {
                 if(card != null && card.tag == "Card")
@@ -267,7 +261,7 @@ public class CardManager : MonoBehaviour {
         
         for(int i = 0; i < floors; i++)
         {
-            StartCoroutine(CreateCardRow(pillars - i, ( i * 0.33333f ) + ( - pillars / 2.66666f ), i * 0.8f, 0, i*2));
+            StartCoroutine(CreateCardRow(pillars - i, ( i * 0.33333f ) + ( - pillars / 2.66666f ), i * GetxSize(10.0f), 0, i*2));
         }
     }
 
@@ -298,7 +292,7 @@ public class CardManager : MonoBehaviour {
 
     public float GetxSize(float angle)
     {
-        return card.GetComponent<Renderer>().bounds.size.x * Mathf.Cos(angle);
+        return card.GetComponent<Renderer>().bounds.size.x * Mathf.Cos(angle * Mathf.Deg2Rad);
     }
 }
     
